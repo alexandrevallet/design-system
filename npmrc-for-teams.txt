@@ -1,0 +1,29 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# FICHIER À COPIER dans votre projet Angular sous le nom ".npmrc"
+# (à la racine, au même niveau que package.json)
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# Ce fichier indique à npm d'aller chercher le scope @inlog
+# sur GitHub Packages plutôt que sur le registry public npmjs.com.
+#
+# ÉTAPE 1 — Créer un Personal Access Token GitHub :
+#   → https://github.com/settings/tokens/new
+#   → Cocher "read:packages"
+#   → Copier le token généré (ghp_xxxxxxxxxxxx)
+#
+# ÉTAPE 2 — Remplacer VOTRE_TOKEN_GITHUB ci-dessous par votre token
+#
+# ÉTAPE 3 — NE JAMAIS commiter ce fichier avec votre vrai token !
+#            Ajoutez .npmrc à votre .gitignore,
+#            ou utilisez une variable d'environnement : ${NPM_TOKEN}
+#
+# ─────────────────────────────────────────────────────────────────────────────
+
+@inlog:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=VOTRE_TOKEN_GITHUB
+
+# ─────────────────────────────────────────────────────────────────────────────
+# VERSION AVEC VARIABLE D'ENVIRONNEMENT (recommandé pour CI/CD)
+# ─────────────────────────────────────────────────────────────────────────────
+# @inlog:registry=https://npm.pkg.github.com
+# //npm.pkg.github.com/:_authToken=${NPM_TOKEN}
