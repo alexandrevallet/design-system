@@ -1,19 +1,26 @@
 {
   "name": "@inlog/ds",
-  "version": "1.0.0",
-  "description": "Design System INLOG — Thème PrimeNG et tokens de design pour les équipes de développement INLOG",
+  "version": "1.1.0",
+  "description": "Design System INLOG - Theme PrimeNG et tokens de design",
   "author": "INLOG",
   "license": "UNLICENSED",
   "private": false,
-
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./tokens": "./src/tokens/index.ts",
-    "./theme": "./src/theme/group-theme.ts"
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./tokens": {
+      "import": "./dist/tokens/index.js",
+      "types": "./dist/tokens/index.d.ts"
+    },
+    "./theme": {
+      "import": "./dist/theme/group-theme.js",
+      "types": "./dist/theme/group-theme.d.ts"
+    }
   },
-
   "keywords": [
     "inlog",
     "design-system",
@@ -21,39 +28,39 @@
     "angular",
     "theme"
   ],
-
+  "scripts": {
+    "build": "tsc --noEmitOnError false",
+    "prepare": "tsc --noEmitOnError false"
+  },
   "peerDependencies": {
     "@angular/core": ">=19.0.0",
     "primeng": ">=19.0.0",
     "@primeuix/themes": ">=0.7.0"
   },
-
   "peerDependenciesMeta": {
-    "@angular/core": { "optional": false },
-    "primeng": { "optional": true },
-    "@primeuix/themes": { "optional": true }
+    "@angular/core": {
+      "optional": false
+    },
+    "primeng": {
+      "optional": true
+    },
+    "@primeuix/themes": {
+      "optional": true
+    }
   },
-
   "devDependencies": {
     "typescript": "^5.6.0"
   },
-
-  "scripts": {
-    "pack": "npm pack",
-    "publish:gpr": "npm publish --registry=https://npm.pkg.github.com"
-  },
-
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
     "access": "public"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexandrevallet/design-system.git"
   },
-
   "files": [
+    "dist/",
     "src/"
   ]
 }

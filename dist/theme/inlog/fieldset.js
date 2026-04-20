@@ -1,0 +1,37 @@
+export default {
+    root: {
+        color: "{content.color}",
+        padding: "0 1.125rem 1.125rem 1.125rem",
+        background: "{content.background}",
+        borderColor: "{content.border.color}",
+        borderRadius: "{content.border.radius}",
+        transitionDuration: "{transition.duration}"
+    },
+    legend: {
+        gap: "0.5rem",
+        color: "{content.color}",
+        padding: "0.5rem 0.75rem",
+        focusRing: {
+            color: "{focus.ring.color}",
+            style: "{focus.ring.style}",
+            width: "{focus.ring.width}",
+            offset: "{focus.ring.offset}",
+            shadow: "{focus.ring.shadow}"
+        },
+        background: "{content.background}",
+        fontWeight: "600",
+        hoverColor: "{content.hover.color}",
+        borderColor: "transparent",
+        borderWidth: "1px",
+        borderRadius: "{content.border.radius}",
+        hoverBackground: "{content.hover.background}"
+    },
+    content: {
+        padding: "0"
+    },
+    toggleIcon: {
+        color: "{text.muted.color}",
+        hoverColor: "{text.hover.muted.color}"
+    }
+};
+//# sourceMappingURL=fieldset.js.map
