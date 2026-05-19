@@ -4,51 +4,31 @@
 
 ---
 
-## Installation
+## Installation minimale (5 min)
 
-### Prérequis — Configurer le registry
+### 1. Installer les dépendances
 
-GitHub Packages nécessite une authentification même pour lire un package privé.
-Chaque développeur fait cette opération **une seule fois** sur sa machine.
-
-**1. Créer un Personal Access Token GitHub**
-
-→ Aller sur [github.com/settings/tokens/new](https://github.com/settings/tokens/new)
-→ Cocher uniquement **`read:packages`**
-→ Copier le token généré (`ghp_xxxxxxxxxxxx`)
-
-**2. Créer `.npmrc` à la racine de son projet Angular**
-
-```ini
-# .npmrc  (ne pas commiter avec le vrai token !)
-@inlog:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=ghp_VOTRE_TOKEN
-```
-
-> **⚠️ Sécurité** — Ajouter `.npmrc` au `.gitignore` du projet,
-> ou utiliser la variable d'environnement `${NPM_TOKEN}` à la place du token en dur.
-
-**3. Installer le package**
+Dans un projet Angular 19+ :
 
 ```bash
-npm install @inlog/ds
+npm install primeng @primeuix/themes primeicons @angular/animations @angular/cdk
+npm install github:alexandrevallet/design-system#v1.2.0
 ```
 
----
+> **Note** : la lib est distribuée directement depuis GitHub via un tag. Pas besoin de `.npmrc`, pas besoin de Personal Access Token — le repo est public.
 
-## Utilisation
-
-### Appliquer le thème PrimeNG
-
-Dans `app.config.ts` :
+### 2. Configurer le thème dans `app.config.ts`
 
 ```typescript
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import { GroupTheme } from '@inlog/ds';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideAnimationsAsync(),
     providePrimeNG({
       theme: {
         preset: GroupTheme,
@@ -59,83 +39,103 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
+### 3. Ajouter les icônes PrimeNG dans `styles.scss`
+
+```scss
+@import 'primeicons/primeicons.css';
+```
+
 C'est tout. Tous les composants PrimeNG utilisent automatiquement les couleurs et styles INLOG.
 
 ---
 
-### Utiliser les tokens de design
+## Vérification rapide
 
-Les tokens sont utilisables **sans PrimeNG** — dans des styles CSS-in-JS, Tailwind, composants custom, etc.
+Dans un composant standalone :
 
 ```typescript
-// Import de l'objet complet
-import { InlogTokens } from '@inlog/ds';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 
-InlogTokens.colors.blue[500]   // "#4667e5" — Bleu INLOG principal
-InlogTokens.status.danger.bg   // "#fef2f2"
+@Component({
+  selector: 'app-demo',
+  standalone: true,
+  imports: [FormsModule, ButtonModule, InputTextModule],
+  template: `
+    <input pInputText placeholder="Test" />
+    <p-button label="Bouton INLOG" />
+  `
+})
+export class DemoComponent {}
+```
 
-// Import sélectif
-import { colors, primary, status, typography, spacing } from '@inlog/ds';
-// ou depuis le sous-chemin dédié
-import { colors, primary } from '@inlog/ds/tokens';
+Le bouton doit apparaître en bleu INLOG (`#4667e5`).
 
-colors.blue[500]          // "#4667e5"
-primary.DEFAULT            // "#4667e5"
-primary.hover              // "#3c58c3"
-status.success.bg          // "#f0fdf4"
-typography.fontSize.base   // "0.875rem"
-spacing[4]                 // "1rem"
+---
+
+## Pourquoi ces dépendances ?
+
+| Dépendance              | Rôle                                                                            |
+|-------------------------|---------------------------------------------------------------------------------|
+| `primeng`               | La bibliothèque de composants                                                   |
+| `@primeuix/themes`      | Moteur de thèmes utilisé par PrimeNG v19                                        |
+| `primeicons`            | Pack d'icônes (pour `p-datepicker`, `p-select`, etc.)                           |
+| `@angular/animations`   | Requis par PrimeNG pour les transitions (overlays, accordions, etc.)            |
+| `@angular/cdk`          | Requis par PrimeNG (focus management, overlay positioning, etc.)                |
+| `provideAnimationsAsync()` | Active les animations Angular en mode lazy (recommandé)                      |
+
+L'oubli de l'une de ces dépendances ou de `provideAnimationsAsync()` produit des erreurs console au runtime.
+
+---
+
+## Utiliser les tokens de design (sans PrimeNG)
+
+```typescript
+import { InlogTokens, colors, primary } from '@inlog/ds';
+
+InlogTokens.colors.blue[500];   // "#4667e5"
+primary.DEFAULT;                 // "#4667e5"
+primary.hover;                   // "#3c58c3"
+colors.status.success.bg;        // "#f0fdf4"
 ```
 
 ---
 
-### Utiliser les types TypeScript
+## Types TypeScript
 
 ```typescript
 import type { InlogSeverity, InlogSize, InlogVariant } from '@inlog/ds';
 
-severity: InlogSeverity = 'success'; // 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast'
-size: InlogSize = 'normal';           // 'small' | 'normal' | 'large'
-variant: InlogVariant = 'outlined';   // 'filled' | 'outlined' | 'text' | 'link'
+const severity: InlogSeverity = 'success'; // 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast'
+const size: InlogSize = 'normal';           // 'small' | 'normal' | 'large'
+const variant: InlogVariant = 'outlined';   // 'filled' | 'outlined' | 'text' | 'link'
 ```
 
 ---
 
 ## Publier une nouvelle version
 
-### Depuis GitHub (recommandé — CI/CD automatique)
+> **Important** : la lib se distribue via **tag GitHub** (`github:alexandrevallet/design-system#vX.Y.Z`), pas via npm registry. Le dossier `dist/` doit donc être **commité** dans le repo pour que l'install fonctionne.
 
 ```bash
-# S'assurer que le code est committé et poussé
-git add .
-git commit -m "feat: mise à jour du thème v1.1.0"
-git push
+# 1. Builder la lib en local
+npm run build
 
-# Créer le tag → déclenche automatiquement le workflow GitHub Actions
-git tag v1.1.0
-git push origin v1.1.0
+# 2. Commiter dist/ + les modifs
+git add -A
+git commit -m "release: v1.2.0"
+
+# 3. Taguer et pousser
+npm version 1.2.0 --no-git-tag-version   # met à jour package.json
+git add package.json
+git commit -m "chore: bump version to 1.2.0"
+git tag v1.2.0
+git push origin main --tags
 ```
 
-Le workflow `.github/workflows/publish.yml` se déclenche et publie automatiquement sur GitHub Packages.
-
----
-
-### Manuellement depuis le terminal
-
-```bash
-# S'authentifier (une seule fois)
-npm login --registry=https://npm.pkg.github.com --scope=@inlog
-# → Username : votre login GitHub
-# → Password : votre Personal Access Token (ghp_xxx) avec scope "write:packages"
-
-# Mettre à jour la version dans package.json
-npm version patch   # 1.0.0 → 1.0.1
-npm version minor   # 1.0.0 → 1.1.0
-npm version major   # 1.0.0 → 2.0.0
-
-# Publier
-npm publish
-```
+Les consommateurs utilisent ensuite `npm install github:alexandrevallet/design-system#v1.2.0`.
 
 ---
 
@@ -145,52 +145,27 @@ Le thème est généré par le **PrimeNG ThemeDesigner**. Pour le mettre à jour
 
 1. Exporter le nouveau preset depuis [designer.primeng.org](https://designer.primeng.org/)
 2. Remplacer les fichiers dans `src/theme/inlog/`
-3. Mettre à jour la version dans `package.json`
-4. Pousser et taguer → la CI publie automatiquement
-
----
-
-## Structure du package
-
-```
-@inlog/ds/
-├── .github/
-│   └── workflows/
-│       └── publish.yml       ← CI/CD — publication automatique sur tag
-├── src/
-│   ├── index.ts              ← Point d'entrée public (@inlog/ds)
-│   ├── theme/
-│   │   ├── group-theme.ts    ← Export du preset PrimeNG
-│   │   └── inlog/            ← 91 fichiers générés par ThemeDesigner
-│   │       ├── index.ts
-│   │       ├── base.ts       ← Tokens primitifs + sémantiques
-│   │       ├── button.ts
-│   │       └── ...
-│   └── tokens/
-│       └── index.ts          ← Design tokens (@inlog/ds/tokens)
-├── .npmrc                    ← Registry GitHub Packages (publishing)
-├── npmrc-for-teams.txt       ← Template .npmrc à distribuer aux équipes
-├── package.json
-├── tsconfig.json
-└── README.md
-```
+3. `npm run build` pour régénérer `dist/`
+4. Commiter et taguer la nouvelle version (voir section ci-dessus)
 
 ---
 
 ## Compatibilité
 
 | Dépendance       | Version minimale |
-|------------------|-----------------|
-| Angular          | ≥ 19.0          |
-| PrimeNG          | ≥ 19.0          |
-| @primeuix/themes | ≥ 0.7.0         |
-| TypeScript       | ≥ 5.4           |
-| Node.js          | ≥ 20.0          |
+|------------------|------------------|
+| Angular          | ≥ 19.0           |
+| PrimeNG          | ≥ 19.0           |
+| @primeuix/themes | ≥ 1.0.0          |
+| TypeScript       | ≥ 5.4            |
+| Node.js          | ≥ 20.0           |
 
 ---
 
 ## Changelog
 
-| Version | Date       | Description                              |
-|---------|------------|------------------------------------------|
-| 1.0.0   | 2026-04-17 | Version initiale — thème INLOG + tokens  |
+| Version | Date       | Description                                                       |
+|---------|------------|-------------------------------------------------------------------|
+| 1.2.0   | 2026-05-19 | Fix install via tag GitHub (retire `prepare` script qui appelait `tsc`). Ajoute `sideEffects: false`. Bump peer `@primeuix/themes` à `>=1.0.0`. |
+| 1.1.0   | 2026-04-20 | Ajout `exports` map et types secondaires (`/tokens`, `/theme`).   |
+| 1.0.0   | 2026-04-17 | Version initiale — thème INLOG + tokens.                          |

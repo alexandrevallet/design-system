@@ -1,6 +1,6 @@
 {
   "name": "@inlog/ds",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Design System INLOG - Theme PrimeNG et tokens de design",
   "author": "INLOG",
   "license": "UNLICENSED",
@@ -28,25 +28,20 @@
     "angular",
     "theme"
   ],
+  "sideEffects": false,
   "scripts": {
     "build": "tsc --noEmitOnError false",
-    "prepare": "tsc --noEmitOnError false"
+    "prepublishOnly": "tsc --noEmitOnError false"
   },
   "peerDependencies": {
     "@angular/core": ">=19.0.0",
     "primeng": ">=19.0.0",
-    "@primeuix/themes": ">=0.7.0"
+    "@primeuix/themes": ">=1.0.0"
   },
   "peerDependenciesMeta": {
-    "@angular/core": {
-      "optional": false
-    },
-    "primeng": {
-      "optional": true
-    },
-    "@primeuix/themes": {
-      "optional": true
-    }
+    "@angular/core": { "optional": false },
+    "primeng": { "optional": true },
+    "@primeuix/themes": { "optional": true }
   },
   "devDependencies": {
     "typescript": "^5.6.0"
