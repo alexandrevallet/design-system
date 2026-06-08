@@ -3,7 +3,7 @@ export default {
         gap: "0.25rem",
         color: "{content.color}",
         padding: "0.5rem 1rem",
-        background: "{content.background}",
+        background: "transparent",
         borderRadius: "{content.border.radius}",
         transitionDuration: "{transition.duration}"
     },
