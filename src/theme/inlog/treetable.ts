@@ -61,17 +61,19 @@ import type { TreeTableDesignTokens } from '@primeuix/themes/types/treetable';
             offset: "-1px",
             shadow: "{focus.ring.shadow}"
         },
-        background: "{content.background}",
         hoverColor: "{content.hover.color}",
         borderColor: "{treetable.border.color}",
         selectedColor: "{highlight.color}",
-        hoverBackground: "{content.hover.background}",
         selectedBackground: "{highlight.background}"
     },
     colorScheme: {
         dark: {
             root: {
                 borderColor: "{surface.800}"
+            },
+            headerCell: {
+                background: "{surface.800}",
+                hoverBackground: "{surface.700}"
             },
             bodyCell: {
                 selectedBorderColor: "{primary.900}"
@@ -80,6 +82,10 @@ import type { TreeTableDesignTokens } from '@primeuix/themes/types/treetable';
         light: {
             root: {
                 borderColor: "{content.border.color}"
+            },
+            headerCell: {
+                background: "{surface.100}",
+                hoverBackground: "{surface.200}"
             },
             bodyCell: {
                 selectedBorderColor: "{primary.100}"

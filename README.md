@@ -12,7 +12,7 @@ Dans un projet Angular 19+ :
 
 ```bash
 npm install primeng @primeuix/themes primeicons @angular/animations @angular/cdk
-npm install github:alexandrevallet/design-system#v1.2.0
+npm install github:alexandrevallet/design-system#v21.0.1
 ```
 
 > **Note** : la lib est distribuée directement depuis GitHub via un tag. Pas besoin de `.npmrc`, pas besoin de Personal Access Token — le repo est public.

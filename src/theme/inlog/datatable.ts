@@ -133,17 +133,19 @@ import type { DataTableDesignTokens } from '@primeuix/themes/types/datatable';
             offset: "-1px",
             shadow: "{focus.ring.shadow}"
         },
-        background: "{slate-50}",
         hoverColor: "{content.hover.color}",
         borderColor: "{datatable.border.color}",
         selectedColor: "{highlight.color}",
-        hoverBackground: "{content.hover.background}",
         selectedBackground: "{highlight.background}"
     },
     colorScheme: {
         dark: {
             row: {
                 stripedBackground: "{surface.950}"
+            },
+            headerCell: {
+                background: "{surface.800}",
+                hoverBackground: "{surface.700}"
             },
             root: {
                 borderColor: "{surface.800}"
@@ -155,6 +157,10 @@ import type { DataTableDesignTokens } from '@primeuix/themes/types/datatable';
         light: {
             row: {
                 stripedBackground: "{surface.50}"
+            },
+            headerCell: {
+                background: "{surface.100}",
+                hoverBackground: "{surface.200}"
             },
             root: {
                 borderColor: "{content.border.color}"
