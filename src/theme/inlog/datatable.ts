@@ -135,8 +135,7 @@ import type { DataTableDesignTokens } from '@primeuix/themes/types/datatable';
         },
         hoverColor: "{content.hover.color}",
         borderColor: "{datatable.border.color}",
-        selectedColor: "{highlight.color}",
-        selectedBackground: "{highlight.background}"
+        selectedColor: "{highlight.color}"
     },
     colorScheme: {
         dark: {
@@ -145,7 +144,8 @@ import type { DataTableDesignTokens } from '@primeuix/themes/types/datatable';
             },
             headerCell: {
                 background: "{surface.800}",
-                hoverBackground: "{surface.700}"
+                hoverBackground: "{surface.700}",
+                selectedBackground: "color-mix(in srgb, {primary.400} 16%, {surface.800})"
             },
             root: {
                 borderColor: "{surface.800}"
@@ -160,7 +160,8 @@ import type { DataTableDesignTokens } from '@primeuix/themes/types/datatable';
             },
             headerCell: {
                 background: "{surface.100}",
-                hoverBackground: "{surface.200}"
+                hoverBackground: "{surface.200}",
+                selectedBackground: "color-mix(in srgb, {primary.500} 8%, {surface.100})"
             },
             root: {
                 borderColor: "{content.border.color}"

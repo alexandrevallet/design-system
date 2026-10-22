@@ -61,8 +61,7 @@ export default {
         },
         hoverColor: "{content.hover.color}",
         borderColor: "{treetable.border.color}",
-        selectedColor: "{highlight.color}",
-        selectedBackground: "{highlight.background}"
+        selectedColor: "{highlight.color}"
     },
     colorScheme: {
         dark: {
@@ -71,7 +70,8 @@ export default {
             },
             headerCell: {
                 background: "{surface.800}",
-                hoverBackground: "{surface.700}"
+                hoverBackground: "{surface.700}",
+                selectedBackground: "color-mix(in srgb, {primary.400} 16%, {surface.800})"
             },
             bodyCell: {
                 selectedBorderColor: "{primary.900}"
@@ -83,7 +83,8 @@ export default {
             },
             headerCell: {
                 background: "{surface.100}",
-                hoverBackground: "{surface.200}"
+                hoverBackground: "{surface.200}",
+                selectedBackground: "color-mix(in srgb, {primary.500} 8%, {surface.100})"
             },
             bodyCell: {
                 selectedBorderColor: "{primary.100}"
